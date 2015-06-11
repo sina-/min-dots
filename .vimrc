@@ -41,6 +41,7 @@ Bundle "junegunn/goyo.vim"
 "Bundle "vim-scripts/SyntaxRange"
 "Bundle "tybenz/vimdeck"
 Bundle "elzr/vim-json"
+Bundle "kien/rainbow_parentheses.vim"
 
 syntax on
 filetype plugin indent on
@@ -310,3 +311,9 @@ au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
 " Override * and g* to not move the cursor and always set hls.
 map * :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>
 map g* :let @/ = expand('<cword>')\|set hlsearch<C-M>
+
+" Rainbow parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
