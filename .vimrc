@@ -43,8 +43,14 @@ Bundle "junegunn/goyo.vim"
 Bundle "elzr/vim-json"
 Bundle "kien/rainbow_parentheses.vim"
 
+" ======
+" Global
+" ======
+
 syntax on
 filetype plugin indent on
+colorscheme molokai
+
 set showcmd
 set cursorline
 set cursorcolumn
@@ -52,54 +58,84 @@ set showmatch
 set noswapfile
 let loaded_matchparen=1
 set title
-set virtualedit=onemore             " Allow for cursor beyond last character
-set laststatus=2                    " Always show the statusline
+set virtualedit=onemore
+set laststatus=2
 set spelllang=en_us
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
-
-let g:nerdtree_tabs_open_on_console_startup=1
-let g:nerdtree_tabs_open_on_gui_startup=1
-let g:NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-let NERDTreeShowHidden=1
-"autofocus to the opened tab
-"autocmd BufNew * wincmd l
-
 let g:mapleader=","
-
-"TODO: should be set only on .sql files
-let g:dbext_default_profile_vinnie = 'type=MYSQL:user=sina:dbname=temp:port=3306:cmd_terminator=;'
-let g:dbext_default_profile_local = 'type=MYSQL:user=root:dbname=temp'
-let g:dbext_default_profile_enzo = 'type=MYSQL:user=sina:dbname=temp:port=3306'
-let g:dbext_default_profile = 'vinnie'
-let g:dbext_default_MYSQL_cmd_terminator = ";"
-"The above command doesnt work for some reason and each time vim is started
-"this line is used :DBSetOption cmd_terminator=;
-"run it after the first execution of a query, otherwise it fails -.-
-
-"NERDTree
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-"dbext
-"nnoremap <Leader><C-j> :DBExecSQLUnderCursor<CR> 
-nnoremap <Leader><C-j> vip:DBExecVisualSQL<CR> 
-"inoremap <C-@> <C-Space>
-"inoremap <Leader>, <C-x><C-k>
-
 set tags=$VIRTUAL_ENV/tags,~/tags;/
-"TagList
-let g:Tlist_Ctags_Cmd='/usr/bin/ctags'
-let g:Tlist_Use_Right_Window=1
-let g:Tlist_Auto_Open=1
-let g:Tlist_File_Fold_Auto_Close=1
-let g:Tlist_Highlight_Tag_On_BufEnter=1
-map <F3> :TlistToggle<CR>
 
-colorscheme molokai
+"show whitespace as underscore and tab as bar
+"taken from http://stackoverflow.com/a/11202502
+set list listchars=tab:\|\ 
+highlight Whitespace cterm=underline gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=8
+autocmd ColorScheme * highlight Whitespace gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=8
+match Whitespace /  \+/
+" configure expansion of tabs for various file types
+" taken from http://stackoverflow.com/a/65122
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.c set noexpandtab
+au BufRead,BufNewFile *.h set noexpandtab
+au BufRead,BufNewFile Makefile* set noexpandtab
+set expandtab           " enter spaces when tab is pressed
+set textwidth=120       " break lines when line length increases
+set tabstop=4           " use 4 spaces to represent tab
+set softtabstop=4
+set shiftwidth=4        " number of spaces to use for auto indent
+set autoindent          " copy indent from current line when starting a new line
+set backspace=indent,eol,start
+set ruler
+set number
+set statusline=%F%m%r%h%w\ [%Y\ %{&ff}]\ [%l/%L\ (%p%%)]\ %c
+set history=700
+set undolevels=700
+set textwidth=0 
+set wrapmargin=0
+set pastetoggle=<F2>
 
+" Ignore case when searching...
+set ignorecase
+" ...except if we input a capital letter
+set smartcase
+
+"better marks, swap the behaviour
+nnoremap ' `
+nnoremap ` '
+
+map <F5> :setlocal spell! spelllang=en_us<CR>
+
+" navigate based on position rather than line
+nmap j gj
+nmap k gk
+
+" avoid accidently removing recently typed line/word by pressing ctrl-u
+" this mapping makes the loss recoverable by pressing u in normal mode
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+
+" undo history was lost on buffer switch, perserve them!
+set hidden
+
+" Override * and g* to not move the cursor and always set hls.
+map * :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>
+map g* :let @/ = expand('<cword>')\|set hlsearch<C-M>
+
+" searching
+set hlsearch
+set incsearch
+nmap \q :nohlsearch<CR>
+
+" get back where you were after editing another buffer
+nmap <C-e> :e#<CR>
+
+" automatically delete trailing white-spaces for .py files upon save
+" http://vim.wikia.com/wiki/Remove_unwanted_spaces#Automatically_removing_all_trailing_whitespace
+autocmd BufWritePre *.py :%s/\s\+$//e
+
+" =================
 " vim-indent-guides
+" =================
+
 set ts=2 sw=2 et
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size = 1
@@ -108,13 +144,137 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black   ctermbg=236
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgray ctermbg=234
 let g:indent_guides_enable_on_vim_startup = 1
 
+" ========
+" NerdTree
+" ========
 
-"dbext
-"TODO: should only run on .sql files
-"autocmd VimEnter * DBCompleteTable
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_open_on_gui_startup=1
+let g:NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+let NERDTreeShowHidden=1
+"autofocus to the opened tab
+"autocmd BufNew * wincmd l
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" =====
+" dbext
+" =====
+
+"TODO: should be set only on .sql files
+let g:dbext_default_profile_vinnie = 'type=MYSQL:user=sina:dbname=temp:port=3306:cmd_terminator=;'
+let g:dbext_default_profile_local = 'type=MYSQL:user=root:dbname=temp'
+let g:dbext_default_profile_enzo = 'type=MYSQL:user=sina:dbname=temp:port=3306'
+let g:dbext_default_profile = 'vinnie'
+let g:dbext_default_MYSQL_cmd_terminator = ";"
 let g:dbext_cmd_terminator=';'
-"let g:ftplugin_sql_omni_key = '<C-Q>'
-"let  g:dbext_default_DBI_cmd_terminator = ';'
+
+nnoremap <Leader><C-j> vip:DBExecVisualSQL<CR> 
+"nnoremap <Leader><C-j> :DBExecSQLUnderCursor<CR> 
+"inoremap <C-@> <C-Space>
+"inoremap <Leader>, <C-x><C-k>
+
+" ======
+" TagList
+" ======
+
+let g:Tlist_Ctags_Cmd='/usr/bin/ctags'
+let g:Tlist_Use_Right_Window=1
+let g:Tlist_Auto_Open=1
+let g:Tlist_File_Fold_Auto_Close=1
+let g:Tlist_Highlight_Tag_On_BufEnter=1
+map <F3> :TlistToggle<CR>
+
+" ======
+" Slimux
+" ======
+
+noremap <Leader>s :SlimuxREPLSendSelection<CR>
+noremap <Leader>l :SlimuxREPLSendLine<CR>
+
+" ===================
+" Rainbow parentheses
+" ===================
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" ==============
+" presenting.vim
+" ==============
+
+au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
+
+" ===================
+" vim airline buffers
+" ===================
+"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'dark'
+let g:airline_section_z = '%p%% : %l/%L : %c'
+
+" =========
+" UltiSnips
+" =========
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+"function! g:UltiSnips_Complete()
+"    call UltiSnips#ExpandSnippet()
+"    if g:ulti_expand_res == 0
+"        if pumvisible()
+"            return "\<C-n>"
+"        else
+"            call UltiSnips#JumpForwards()
+"            if g:ulti_jump_forwards_res == 0
+"               return "\<TAB>"
+"            endif
+"        endif
+"    endif
+"    return ""
+"endfunction
+"
+"autocmd BufEnter * exec "inoremap <buffer> <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsListSnippets="<c-e>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<s-tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" ===
+" YCM
+" ===
+
+" taken from http://stackoverflow.com/a/22253548 
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>']
+let g:ycm_key_list_previous_completion = ['<C-p>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" =========
+" Syntastic
+" =========
+
+let g:syntastic_mode_map = { 'mode' : 'active' }
+let g:syntastic_python_checkers = ['pylint', 'pep8']
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_quiet_messages = { "level": "warnigs", "regex": 'E501' }
+" if vim becomes slow after save try these flags
+let g:syntastic_enable_highlighting = 0
+" let g:syntastic_echo_current_error = 0
+
+" ================
+" Custom Functions
+" ================
 
 " Highlight all instances of word under cursor, when idle.
 " Type z/ to toggle highlighting on/off.
@@ -138,182 +298,12 @@ function! AutoHighlightToggle()
 	endif
 endfunction
 "call AutoHighlightToggle()
-"
 
-"show whitespace as underscore and tab as bar
-"taken from http://stackoverflow.com/a/11202502
-set list listchars=tab:\|\ 
-highlight Whitespace cterm=underline gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=8
-autocmd ColorScheme * highlight Whitespace gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=8
-match Whitespace /  \+/
-
-
-" configure expanding of tabs for various file types
-" taken from http://stackoverflow.com/a/65122
-au BufRead,BufNewFile *.py set expandtab
-au BufRead,BufNewFile *.c set noexpandtab
-au BufRead,BufNewFile *.h set noexpandtab
-au BufRead,BufNewFile Makefile* set noexpandtab
-" --------------------------------------------------------------------------------
-"  " configure editor with tabs and nice stuff...
-"  "
-"  --------------------------------------------------------------------------------
-set expandtab           " enter spaces when tab is pressed
-set textwidth=120       " break lines when line length increases
-set tabstop=4           " use 4 spaces to represent tab
-set softtabstop=4
-set shiftwidth=4        " number of spaces to use for auto indent
-set autoindent          " copy indent from current line when starting a new line
-"
-" make backspaces more powerfull
-set backspace=indent,eol,start
-"
-set ruler                           " show line and column number
-"  syntax on   			" syntax highlighting
-"  set showcmd 			" show (partial) command in status line
-
-
-"show line numbers
-set number
-
-" set ctrl-c to copy the selection, super coolr
+" set ctrl-c to copy the selection
 " http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
 vmap <C-c> :<Esc>`>a<CR><Esc>mx`<i<CR><Esc>my'xk$v'y!xclip -selection c<CR>u
-
-set statusline=%F%m%r%h%w\ [%Y\ %{&ff}]\ [%l/%L\ (%p%%)]\ %c
-
-set history=700
-set undolevels=700
-
-"better marks, swap the behaviour
-nnoremap ' `
-nnoremap ` '
-
-set textwidth=0 
-set wrapmargin=0
-
-set pastetoggle=<F2>
-
-map <F5> :setlocal spell! spelllang=en_us<CR>
-
-" navigate based on position rather than line
-nmap j gj
-nmap k gk
-
-"avoid accidently removing recently typed line/word by pressing ctrl-u
-"this mapping makes the loss recoverable by pressing u in normal mode
-inoremap <c-u> <c-g>u<c-u>
-inoremap <c-w> <c-g>u<c-w>
 
 " map ctrl+/ to do vimgrep on the current word. Mapping is on <C-_> 
 " because vim registers underscore as slash. 
 " To see that: In insert mode after pressing ctrl+v do ctrl+/
 nmap <C-_> :vimgrep /<c-r><c-w>/ **
-
-"use enter and shift enter to insert new lines
-"nmap <S-Enter> O<Esc>
-"nmap <CR> o<Esc>
-"press space to insert space in normal mode 
-"nmap <Space> i <Esc>l
-
-
-noremap <Leader>s :SlimuxREPLSendSelection<CR>
-noremap <Leader>l :SlimuxREPLSendLine<CR>
-
-"toggle to manual MBE start
-"let g:miniBufExplorerAutoStart=0
-
-" Syntastic
-let g:syntastic_mode_map = { 'mode' : 'active' }
-let g:syntastic_python_checkers = ['pylint', 'pep8']
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_quiet_messages = { "level": "warnigs", "regex": 'E501' }
-"if vim becomes slow after save try these flags
-let g:syntastic_enable_highlighting = 0
-"let g:syntastic_echo_current_error = 0
-
-"undo history was lost on buffer switch, perserve them!
-set hidden
-
-" automatically delete trailing white-spaces for .py files upon save
-" http://vim.wikia.com/wiki/Remove_unwanted_spaces#Automatically_removing_all_trailing_whitespace
-autocmd BufWritePre *.py :%s/\s\+$//e
-
-" Ignore case when searching...
-set ignorecase
-" ...except if we input a capital letter
-set smartcase
-" searching
-set hlsearch
-set incsearch
-nmap \q :nohlsearch<CR>
-
-"noremap <C-n> :MBEbf<CR>
-"noremap <C-p> :MBEbb<CR>
-"
-
-" get back where you were after editing another buffer
-nmap <C-e> :e#<CR>
-
-" ultisnips
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<s-tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
-" taken from http://stackoverflow.com/a/22253548 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>']
-let g:ycm_key_list_previous_completion = ['<C-p>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-
-"function! g:UltiSnips_Complete()
-"    call UltiSnips#ExpandSnippet()
-"    if g:ulti_expand_res == 0
-"        if pumvisible()
-"            return "\<C-n>"
-"        else
-"            call UltiSnips#JumpForwards()
-"            if g:ulti_jump_forwards_res == 0
-"               return "\<TAB>"
-"            endif
-"        endif
-"    endif
-"    return ""
-"endfunction
-"
-"autocmd BufEnter * exec "inoremap <buffer> <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsListSnippets="<c-e>"
-
-"vim-auto-save
-"let g:auto_save = 1
-
-"vim airline buffers
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'dark'
-let g:airline_section_z = '%p%% : %l/%L : %c'
-"call airline#part#define_accent(
-
-
-"Unite
-"nnoremap <space>/ :Unite grep:.<CR>
-
-"presenting.vim
-au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
-
-" Override * and g* to not move the cursor and always set hls.
-map * :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>
-map g* :let @/ = expand('<cword>')\|set hlsearch<C-M>
-
-" Rainbow parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
