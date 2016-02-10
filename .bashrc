@@ -124,3 +124,12 @@ export TERM=xterm-256color
 export IGNOREEOF=3
 export PAGER=most
 export EDITOR='vim'
+
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUAL_ENV=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/workspace
+if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
+  source /usr/local/bin/virtualenvwrapper.sh
+else
+  echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
