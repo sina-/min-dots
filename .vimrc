@@ -1,47 +1,68 @@
-set nocompatible              " be iMproved
-filetype off                  " required!
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if &compatible
+  set nocompatible
+endif
 
-" let Vundle manage Vundle
-" required! 
-Bundle "gmarik/vundle"
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "scrooloose/nerdtree"
-Bundle "jistr/vim-nerdtree-tabs"
-Bundle "fholgado/minibufexpl.vim"
-Bundle "kien/ctrlp.vim"
-Bundle "vim-scripts/dbext.vim"
-Bundle "vim-scripts/taglist.vim"
-Bundle "vim-scripts/utags"
-Bundle "scrooloose/Syntastic"
-Bundle "Valloric/YouCompleteMe"
-"Bundle "vim-scripts/Python-mode-klen"
-"Bundle "vim-scripts/AutoComplPop"
-"Bundle "fisadev/vim-debug.vim"
-Bundle "epeli/slimux"
-"Bundle "gotcha/vimpdb"
-"Bundle "garbas/vim-snipmate"
-Bundle "SirVer/ultisnips"
-Bundle "honza/vim-snippets"
-Bundle "ervandew/supertab"
-Bundle "hynek/vim-python-pep8-indent"
-Bundle "nathanaelkane/vim-indent-guides"
-Bundle "terryma/vim-multiple-cursors"
-Bundle "vim-scripts/vim-auto-save"
-Bundle "bling/vim-airline"
-Bundle "justinmk/vim-sneak"
-Bundle "ConradIrwin/vim-bracketed-paste"
-"Bundle "Shougo/unite.vim"
-"Bundle "Shougo/vimproc.vim"
-Bundle "junegunn/goyo.vim"
-"Bundle "tpope/vim-markdown"
-"Bundle "vim-scripts/SyntaxRange"
-"Bundle "tybenz/vimdeck"
-Bundle "elzr/vim-json"
-Bundle "kien/rainbow_parentheses.vim"
+" Required:
+set runtimepath^=~/.vim/bundle/neobundle.vim/
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'scrooloose/Syntastic'
+NeoBundle 'hynek/vim-python-pep8-indent'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'vim-scripts/vim-auto-save'
+NeoBundle 'elzr/vim-json'
+NeoBundle 'junegunn/goyo.vim'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'ConradIrwin/vim-bracketed-paste'
+NeoBundle 'justinmk/vim-sneak'
+NeoBundle 'epeli/slimux'
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'joonty/vdebug'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'fholgado/minibufexpl.vim'
+
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+NeoBundleCheck
+
+"Plugin 'vim-scripts/taglist.vim'
+"Plugin 'vim-scripts/utags'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
+"Plugin 'terryma/vim-multiple-cursors'
+
+"Plugin 'tpope/vim-markdown'
+"Plugin 'vim-scripts/SyntaxRange'
+"Plugin 'tybenz/vimdeck'
+"Plugin 'Shougo/unite.vim'
+"Plugin 'Shougo/vimproc.vim'
+"Plugin 'gotcha/vimpdb'
+"Plugin 'garbas/vim-snipmate'
+"Plugin 'vim-scripts/Python-mode-klen'
+"Plugin 'vim-scripts/AutoComplPop'
+"Plugin 'fisadev/vim-debug.vim'
 
 " ======
 " Global
@@ -143,6 +164,7 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black   ctermbg=236
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgray ctermbg=234
 let g:indent_guides_enable_on_vim_startup = 1
+
 
 " ========
 " NerdTree
@@ -271,6 +293,22 @@ let g:syntastic_quiet_messages = { "level": "warnigs", "regex": 'E501' }
 " if vim becomes slow after save try these flags
 let g:syntastic_enable_highlighting = 0
 " let g:syntastic_echo_current_error = 0
+
+" ===================
+" nerdtree-git-plugin
+" ===================
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " ================
 " Custom Functions
