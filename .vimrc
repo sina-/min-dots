@@ -36,7 +36,7 @@ NeoBundle 'justinmk/vim-sneak'
 NeoBundle 'epeli/slimux'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'joonty/vdebug'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+" NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'fholgado/minibufexpl.vim'
 
@@ -85,6 +85,7 @@ set spelllang=en_us
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 let g:mapleader=","
 set tags=$VIRTUAL_ENV/tags,~/tags;/
+set clipboard=unnamed
 
 "show whitespace as underscore and tab as bar
 "taken from http://stackoverflow.com/a/11202502
@@ -163,7 +164,7 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black   ctermbg=236
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgray ctermbg=234
-let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 0
 
 
 " ========
@@ -227,9 +228,17 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " ==============
-" presenting.vim
+" ctrlp
 " ==============
 
+let g:ctrlp_use_caching = 0
+let g:ctrlp_max_files=0
+let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:ctrlp_use_caching = 0
+
+" ==============
+" presenting.vim
+" ==============
 au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
 
 " ===================
