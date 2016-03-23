@@ -1,8 +1,8 @@
 --python-kinds=-i
 --exclude=lib64
---exclude=lib
 --exclude=node_modules
 --exclude=docs
 --exclude=eggs
 --exclude=include
 --exclude=*.db
+--extra=+f

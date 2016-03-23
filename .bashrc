@@ -109,6 +109,9 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+LC_CTYPE=en_US.UTF-8
+export LC_CTYPE
+
 export TERM=xterm-256color
 export IGNOREEOF=3
 #export PAGER=most

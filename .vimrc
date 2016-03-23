@@ -72,7 +72,7 @@ syntax on
 filetype plugin indent on
 colorscheme molokai
 
-set showcmd
+"set showcmd
 set cursorline
 set cursorcolumn
 set showmatch
@@ -154,6 +154,13 @@ nmap <C-e> :e#<CR>
 " http://vim.wikia.com/wiki/Remove_unwanted_spaces#Automatically_removing_all_trailing_whitespace
 autocmd BufWritePre *.py :%s/\s\+$//e
 
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+
 " =================
 " vim-indent-guides
 " =================
@@ -182,6 +189,8 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+noremap <Leader>f :NERDTreeFind<CR>
 
 " =====
 " dbext
@@ -298,9 +307,12 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:syntastic_mode_map = { 'mode' : 'active' }
 let g:syntastic_python_checkers = ['pylint', 'pep8']
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_quiet_messages = { "level": "warnigs", "regex": 'E501' }
+"let g:syntastic_quiet_messages = { "level": "warnigs", "regex": 'E501' }
+let g:syntastic_quiet_messages = { "regex": "missing-docstring" }
 " if vim becomes slow after save try these flags
 let g:syntastic_enable_highlighting = 0
+let g:syntastic_python_pylint_post_args="--max-line-length=120"
+let g:syntastic_python_pep8_post_args="--max-line-length=120"
 " let g:syntastic_echo_current_error = 0
 
 " ===================
@@ -353,4 +365,14 @@ vmap <C-c> :<Esc>`>a<CR><Esc>mx`<i<CR><Esc>my'xk$v'y!xclip -selection c<CR>u
 " map ctrl+/ to do vimgrep on the current word. Mapping is on <C-_> 
 " because vim registers underscore as slash. 
 " To see that: In insert mode after pressing ctrl+v do ctrl+/
-nmap <C-_> :vimgrep /<c-r><c-w>/ **
+" nmap <C-_> :vimgrep /<c-r><c-w>/ **/*.py
+
+" Use silver searcher for grep 
+if executable('ag')
+ " Use ag over grep
+ set grepprg=ag\ --nogroup\ --hidden
+endif
+" bind <C-_> to grep word under cursor and open in quickfix buffer
+nnoremap <C-_> :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><C-w>B
+
+"nmap <Leader>o :CtrlP<CR><C-\>:exe f
