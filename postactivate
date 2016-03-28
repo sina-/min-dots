@@ -8,7 +8,10 @@ done
 #VIRTUAL_ENV_SRC="$VIRTUAL_ENV_SRC $VIRTUAL_ENV/lib/python2.7/site-packages/"
 echo Processing ctags for following pathes
 echo $VIRTUAL_ENV_SRC
-git ls-files | grep '\.py$' | ctags -f $VIRTUAL_ENV/tags --tag-relative -R -L - &> /dev/null & disown
+cd $VIRTUAL_ENV_SRC
+find ./lib -name '*.py' > /tmp/__ctags_file_list__
+git ls-files >> /tmp/__ctags_file_list__
+cat /tmp/__ctags_file_list__ | grep '\.py$' | ctags -f $VIRTUAL_ENV/tags --tag-relative -R -L - &> /dev/null & disown
 #ctags -f $VIRTUAL_ENV/tags -R $VIRTUAL_ENV_SRC 
 echo Finished processing ctags
 #echo Processing utags
