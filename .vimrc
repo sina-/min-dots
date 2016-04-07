@@ -39,6 +39,7 @@ NeoBundle 'joonty/vdebug'
 " NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'fholgado/minibufexpl.vim'
+NeoBundle 'davidhalter/jedi-vim'
 
 call neobundle#end()
 
@@ -299,6 +300,26 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:ycm_key_list_select_completion = ['<C-n>']
 let g:ycm_key_list_previous_completion = ['<C-p>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
+
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_python_binary_path = '/usr/bin/python'
+let g:ycm_always_populate_location_list = 1
+" For some reason the http server for jedi used by ycm is too slow
+" so I use jedi-vim for semantic completion
+let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+
+" ========
+" jedi-vim
+" ========
+
+" Note it also works with ycm
+autocmd FileType python setlocal completeopt-=preview
 
 " =========
 " Syntastic
