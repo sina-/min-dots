@@ -126,9 +126,9 @@ else
   echo "WARNING: Can't find virtualenvwrapper.sh"
 fi
 
-if [ -f `brew --prefix`/usr/local/etc/bash_completion.d ]; then
-  . `brew --prefix`/usr/local/etc/bash_completion.d
-fi
+# if [ -f `brew --prefix`/usr/local/etc/bash_completion.d ]; then
+#   . `brew --prefix`/usr/local/etc/bash_completion.d
+# fi
 
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash

@@ -86,7 +86,7 @@ set spelllang=en_us
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 let g:mapleader=","
 set tags=$VIRTUAL_ENV/tags,~/tags;/
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 "show whitespace as underscore and tab as bar
 "taken from http://stackoverflow.com/a/11202502
