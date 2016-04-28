@@ -40,6 +40,16 @@ NeoBundle 'joonty/vdebug'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'davidhalter/jedi-vim'
+" NeoBundle 'Shougo/unite.vim'
+" NeoBundle 'Shougo/vimproc.vim', {
+" \ 'build' : {
+" \     'windows' : 'tools\\update-dll-mingw',
+" \     'cygwin' : 'make -f make_cygwin.mak',
+" \     'mac' : 'make',
+" \     'linux' : 'make',
+" \     'unix' : 'gmake',
+" \    },
+" \ }
 
 call neobundle#end()
 
@@ -57,8 +67,6 @@ NeoBundleCheck
 "Plugin 'tpope/vim-markdown'
 "Plugin 'vim-scripts/SyntaxRange'
 "Plugin 'tybenz/vimdeck'
-"Plugin 'Shougo/unite.vim'
-"Plugin 'Shougo/vimproc.vim'
 "Plugin 'gotcha/vimpdb'
 "Plugin 'garbas/vim-snipmate'
 "Plugin 'vim-scripts/Python-mode-klen'
@@ -86,7 +94,8 @@ set spelllang=en_us
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 let g:mapleader=","
 set tags=$VIRTUAL_ENV/tags,~/tags;/
-set clipboard=unnamedplus
+" Cross platform clipboard! http://stackoverflow.com/a/30691754
+set clipboard^=unnamed,unnamedplus
 
 "show whitespace as underscore and tab as bar
 "taken from http://stackoverflow.com/a/11202502
@@ -237,14 +246,35 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-" ==============
+" =====
 " ctrlp
-" ==============
+" =====
 
-let g:ctrlp_use_caching = 0
-let g:ctrlp_max_files=0
+" let g:ctrlp_use_caching = 0
 let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
-let g:ctrlp_use_caching = 0
+let g:ctrlp_follow_symlinks=1
+let g:ctrlp_max_files=20000
+let g:ctrlp_custom_ignore = {
+      \ 'dir': '\v[\/]\.(git|hg|svn|idea)$',
+      \ 'file': '\v\.DS_Store$'
+      \ }
+
+nnoremap <Leader>t :CtrlPBufTag<cr>
+nnoremap <Leader>T :CtrlPTag<cr>
+nnoremap <Leader>l :CtrlPLine<cr>
+nnoremap <Leader>o :CtrlPFunky<cr>
+nnoremap <Leader>b :CtrlPBuffer<cr>
+
+" =========
+" unite.vim
+" =========
+
+" let g:unite_source_rec_async_command = 'ag --follow --nocolor --nogroup --hidden -g ""'
+" let g:unite_source_grep_command='ag'
+" let g:unite_source_grep_default_opts='--nocolor --line-numbers --nogroup -S -C4'
+" let g:unite_source_grep_recursive_opt=''
+" nnoremap <C-p> :Unite file_rec/async<cr>
+" nnoremap <space>/ :Unite grep:.<cr>
 
 " ==============
 " presenting.vim
