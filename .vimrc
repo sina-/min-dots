@@ -26,7 +26,6 @@ NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'vim-scripts/vim-auto-save'
 NeoBundle 'elzr/vim-json'
 NeoBundle 'junegunn/goyo.vim'
 NeoBundle 'bling/vim-airline'
@@ -36,6 +35,7 @@ NeoBundle 'justinmk/vim-sneak'
 NeoBundle 'epeli/slimux'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'joonty/vdebug'
+NeoBundle 'ludovicchabant/vim-gutentags'
 " NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'fholgado/minibufexpl.vim'
@@ -58,6 +58,7 @@ filetype plugin indent on
 
 NeoBundleCheck
 
+"NeoBundle 'vim-scripts/vim-auto-save'
 "Plugin 'vim-scripts/taglist.vim'
 "Plugin 'vim-scripts/utags'
 "Plugin 'SirVer/ultisnips'
@@ -324,6 +325,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " ===
 " YCM
 " ===
+"
+" NOTE: Install universal-ctags and use it instead of ctags or
+" exuberante-ctags
 
 " taken from http://stackoverflow.com/a/22253548 
 " make YCM compatible with UltiSnips (using supertab)
@@ -362,8 +366,8 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_quiet_messages = { "regex": "missing-docstring" }
 " if vim becomes slow after save try these flags
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_python_pylint_post_args="--max-line-length=120"
-let g:syntastic_python_pep8_post_args="--max-line-length=120"
+let g:syntastic_python_pylint_post_args="--max-line-length=79"
+let g:syntastic_python_pep8_post_args="--max-line-length=79"
 " let g:syntastic_echo_current_error = 0
 
 " ===================
