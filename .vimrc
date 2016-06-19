@@ -94,7 +94,7 @@ set laststatus=2
 set spelllang=en_us
 hi MatchParen cterm=underline ctermbg=green ctermfg=blue
 let g:mapleader=","
-set tags=$VIRTUAL_ENV/tags,~/tags;/
+" set tags=$VIRTUAL_ENV/tags,~/tags;/
 " Cross platform clipboard! http://stackoverflow.com/a/30691754
 set clipboard^=unnamed,unnamedplus
 
