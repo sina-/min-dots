@@ -101,8 +101,8 @@ set clipboard^=unnamed,unnamedplus
 "show whitespace as underscore and tab as bar
 "taken from http://stackoverflow.com/a/11202502
 set list listchars=tab:\|\ 
-highlight Whitespace cterm=underline gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=8
-autocmd ColorScheme * highlight Whitespace gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=8
+highlight Whitespace cterm=underline gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=yellow
+autocmd ColorScheme * highlight Whitespace gui=underline ctermbg=NONE guibg=NONE ctermfg=8 guifg=yellow
 match Whitespace /  \+/
 " configure expansion of tabs for various file types
 " taken from http://stackoverflow.com/a/65122
