@@ -122,8 +122,8 @@ export VIRTUAL_ENV=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
   source /usr/local/bin/virtualenvwrapper.sh
-else
-  echo "WARNING: Can't find virtualenvwrapper.sh"
+#else
+#  echo "WARNING: Can't find virtualenvwrapper.sh"
 fi
 
 # if [ -f `brew --prefix`/usr/local/etc/bash_completion.d ]; then
@@ -133,3 +133,5 @@ fi
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
+
+setxkbmap -option ctrl:nocaps
