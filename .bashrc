@@ -135,3 +135,4 @@ if [ -f ~/.git-completion.bash ]; then
 fi
 
 setxkbmap -option ctrl:nocaps
+
