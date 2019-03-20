@@ -1,2 +1,23 @@
 [pull]
 	rebase = true
+
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	pf = push --force-with-lease
+	st = status
+	p = push
+	c = commit
+
+[user]
+	email = sina.tamanna@gmail.com
+	name = sina-
