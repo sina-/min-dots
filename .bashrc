@@ -136,3 +136,18 @@ fi
 
 setxkbmap -option ctrl:nocaps
 
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+
+alias gst='git status'
+alias gls='git ls-files -m | xargs git add'
+alias gl='git lg'
+alias gcv='git commit -v'
+alias gcan='git commit --amend --no-edit'
+alias gfp='git push --force-with-lease'
+alias gp='git push'
+alias gri='git rebase -i'
+alias g='git'
+alias gpl='git pull'
+alias gsub='git submodule update --init --recursive'
