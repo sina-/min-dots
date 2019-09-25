@@ -125,6 +125,9 @@ set undolevels=700
 set textwidth=0 
 set wrapmargin=0
 set pastetoggle=<F2>
+set undodir=~/.vim/undodir
+set undofile
+set termguicolors
 
 " Ignore case when searching...
 set ignorecase
